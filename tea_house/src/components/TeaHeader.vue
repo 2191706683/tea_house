@@ -1,0 +1,48 @@
+<template>
+    <div class="DcdHeader">
+        <img class="DcdHeader_img" src="https://assets.puercn.com/v3assets/v2/logo-46139d255448a6e7eed8ab315285c0cf25a4d44ec23f2255197fc533d6b6b963.png">
+        <span class="title">茶友网</span>
+        <router-link to="/search">
+            <van-search
+                placeholder="搜你所想"
+                disabled
+                shape="round"
+                class="DcdHeader_search"
+            />
+        </router-link>
+    </div>
+</template>
+
+<script setup>
+
+</script>
+
+<style scoped>
+.DcdHeader {
+    display: flex;
+    align-items: center;
+    padding: 2px 12px 0 12px;
+    background-color: #b83b17;
+}
+.DcdHeader_img {
+    width: 15%;
+    height: 25px;
+}
+.title {
+    width: 25%;
+    margin-left: 10px;
+    color: #fff;
+    font-size: 16px;
+}
+.DcdHeader_search {
+    margin-left: 15px;
+    width: 90%;
+    background-color: #b83b17;
+}
+/* .DcdHeader_button {
+    width: 26%;
+    height: 25px;
+    background-color: #b83b17;
+    font-size: 10px;
+} */
+</style>
