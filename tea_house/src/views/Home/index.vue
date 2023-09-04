@@ -6,16 +6,20 @@
         <van-image :src="image" />
       </van-swipe-item>
     </van-swipe>
+    <TeaIcon></TeaIcon>
+    <TeaTabIcon></TeaTabIcon>
     <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
-import Tabbar from "../../components/tabbar";
-import TeaHeader from "../../components/TeaHeader";
+import Tabbar from "@/components/tabbar";
+import TeaHeader from "@/components/TeaHeader";
+import TeaIcon from "@/components/teaIcon.vue"
+import TeaTabIcon from "@/components/teaTabIcon.vue"
 export default {
   name: "home",
-  components: { Tabbar, TeaHeader },
+  components: { Tabbar, TeaHeader, TeaIcon, TeaTabIcon },
   data() {
     return {
       images: [

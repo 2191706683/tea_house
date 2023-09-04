@@ -4,7 +4,7 @@
         <span class="title">茶友网</span>
         <router-link to="/search">
             <van-search
-                placeholder="搜你所想"
+                placeholder="搜索资讯/产品"
                 disabled
                 shape="round"
                 class="DcdHeader_search"

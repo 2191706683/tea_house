@@ -36,6 +36,11 @@ const routes = [
         },
         component: () => import('@/views/User')
     },
+    {
+        path: '/test',
+        name: 'test',
+        component: () => import('@/components/teaIcon.vue')
+    }
     // {
     //     path: '/search',
     //     name: 'search',
