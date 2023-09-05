@@ -6,8 +6,8 @@
       <router-link
         to="/detail"
         class="car_hotcar_item"
-        v-for="item in carhot"
-        :key="item.id"
+        v-for="(item, index) in carhot"
+        :key="index"
       >
         <img class="car_hotcar_img" v-lazy="item.img" alt="" />
         <span>{{ item.title }}</span>

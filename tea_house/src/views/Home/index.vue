@@ -1,14 +1,14 @@
 <template>
   <div>
-    <TeaHeader></TeaHeader>
+    <TeaHeader/>
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
       <van-swipe-item v-for="(image, index) in images" :key="index">
         <van-image :src="image" />
       </van-swipe-item>
     </van-swipe>
-    <TeaIcon></TeaIcon>
-    <TeaTabIcon></TeaTabIcon>
-    <Tabbar></Tabbar>
+    <TeaIcon/>
+    <TeaArticle v-for="item in 8"></TeaArticle>
+    <Tabbar/>
   </div>
 </template>
 
@@ -16,10 +16,10 @@
 import Tabbar from "@/components/tabbar";
 import TeaHeader from "@/components/TeaHeader";
 import TeaIcon from "@/components/teaIcon.vue"
-import TeaTabIcon from "@/components/teaTabIcon.vue"
+import TeaArticle from "@/components/teaArticle.vue"
 export default {
   name: "home",
-  components: { Tabbar, TeaHeader, TeaIcon, TeaTabIcon },
+  components: { Tabbar, TeaHeader, TeaIcon, TeaArticle },
   data() {
     return {
       images: [

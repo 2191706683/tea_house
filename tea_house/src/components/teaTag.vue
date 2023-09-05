@@ -1,6 +1,6 @@
 <template>
     <div class="car_tag">
-        <span class="car_tagitem" v-for="item in cartag" :key="item.id">{{item.tag}}</span>
+        <span class="car_tagitem" v-for="(item, index) in cartag" :key="index">{{item.tag}}</span>
     </div>
 </template>
 

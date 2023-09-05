@@ -37,10 +37,18 @@ const routes = [
         component: () => import('@/views/User')
     },
     {
+        path: '/brand',
+        name: 'brand',
+        meta: {
+            requiredLogin: true,
+        },
+        component: () => import('@/views/Brand')
+    },
+    {
         path: '/test',
         name: 'test',
-        component: () => import('@/components/teaIcon.vue')
-    }
+        component: () => import('@/components/teaArticle.vue')
+    },
     // {
     //     path: '/search',
     //     name: 'search',
@@ -71,16 +79,16 @@ const routes = [
     //     name: 'login',
     //     component: () => import('@/views/Login/Index.vue')
     // },
-    // {
-    //     path: '/404',
-    //     name: 'NotFound',
-    //     component: () => import('@/views/NotFound/Index.vue')
-    // },
-    // // 所有未定义路由，全部都重定向到404页
-    // {
-    //     path: '/:pathMatch(.*)',
-    //     redirect: '/404'
-    // }
+    {
+        path: '/404',
+        name: 'NotFound',
+        component: () => import('@/views/NotFound/Index.vue')
+    },
+    // 所有未定义路由，全部都重定向到404页
+    {
+        path: '/:pathMatch(.*)',
+        redirect: '/404'
+    }
 ]
 
 export default routes
