@@ -16,7 +16,7 @@
 import Tabbar from "@/components/tabbar";
 import TeaHeader from "@/components/TeaHeader";
 import TeaIcon from "@/components/teaIcon.vue"
-import TeaArticle from "@/components/teaArticle.vue"
+import TeaArticle from "@/components/teaArticleList.vue"
 export default {
   name: "home",
   components: { Tabbar, TeaHeader, TeaIcon, TeaArticle },

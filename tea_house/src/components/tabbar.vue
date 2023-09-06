@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="navbar">
     <van-tabbar route v-model="active" active-color="#b83b17">
       <van-tabbar-item replace to="/" icon="wap-home">首页</van-tabbar-item>
       <van-tabbar-item replace to="/product" icon="apps-o">产品库</van-tabbar-item>
@@ -24,3 +24,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.navbar {
+    padding-bottom: 14%;
+}
+</style>

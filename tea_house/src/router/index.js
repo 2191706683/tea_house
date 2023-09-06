@@ -47,7 +47,12 @@ const routes = [
     {
         path: '/test',
         name: 'test',
-        component: () => import('@/components/teaArticle.vue')
+        component: () => import('@/components/circleList.vue')
+    },
+    {
+        path: '/search',
+        name: 'search',
+        component: () => import('@/views/Search')
     },
     // {
     //     path: '/search',
