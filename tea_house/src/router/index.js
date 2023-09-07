@@ -3,6 +3,13 @@ const routes = [
         path: '/',
         name: 'home',
         component: () => import('@/views/Home')
+        
+    },
+    {
+        path: '/articleDetail',
+        name: 'articleDetail',
+        component: () => import('@/views/Home/ArticleDetail')
+        
     },
     {
         path: '/product',
@@ -34,8 +41,19 @@ const routes = [
         meta: {
             requiredLogin: true,
         },
-        component: () => import('@/views/User')
+        component: () => import('@/views/User/index.vue'),
     },
+    {
+        path: '/userDetail',
+        name: 'userDetail',
+        component: () => import('@/views/User/UserDetail.vue'),
+    },
+    {
+        path: '/setting',
+        name: 'setting',
+        component: () => import('@/views/User/SetUser.vue'),
+    },
+    
     {
         path: '/brand',
         name: 'brand',

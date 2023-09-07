@@ -12,8 +12,16 @@
     </template>
     <template #right>
       <van-icon
+        v-if="iconName === 'search'"
         @click="goToPage('search')"
-        name="search"
+        :name="iconName"
+        color="#000"
+        size="24"
+      />
+      <van-icon
+        v-if="iconName === 'setting-o'"
+        @click="goToPage('setting')"
+        :name="iconName"
         color="#000"
         size="24"
       />
@@ -36,6 +44,10 @@ export default {
       type: String,
       default: "搜索",
     },
+    iconName: {
+      type: String,
+      default: "search"
+    }
   },
   data() {
     return {};
@@ -45,7 +57,7 @@ export default {
       history.back();
     },
     goToPage(path) {
-      this.$router.push({ name: `${path}` });
+      this.$router.push({ name: path });
     },
   },
 };

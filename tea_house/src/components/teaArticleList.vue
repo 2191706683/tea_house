@@ -1,5 +1,5 @@
 <template>
-  <div class="teaArticle">
+  <div @click="gotoPage('articleDetail')" class="teaArticle">
     <span class="teaArticle_title">旺苍茶农带上飞机哦哦哦挨饿王宏恩返回符号欸返回吃下“定心丸”</span>
     <div>
       <van-image class="teaArticle-img" width="100%" height="180" src="https://assets.puercn.com/xsystem/daily/stories/covers/000/145/827/medium/1.jpg?1693907040" />
@@ -21,6 +21,11 @@ export default {
       sub_time: 4
     };
   },
+  methods: {
+    gotoPage(urlName) {
+      this.$router.push({name: urlName})
+    }
+  }
 };
 </script>
 <style>
