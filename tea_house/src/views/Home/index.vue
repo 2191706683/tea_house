@@ -8,14 +8,6 @@
     </van-swipe>
     <TeaIcon />
     <TeaArticle
-      v-for="item in aritcles"
-      :key="item.id"
-      :aritcle_title="item.aritcle_title"
-      :aritcle_img="item.aritcle_img"
-      :article_type="item.article_type"
-      :comments="item.comments"
-      :star="item.star"
-      :sub_time="item.sub_time"
     ></TeaArticle>
     <Tabbar />
   </div>
@@ -37,35 +29,6 @@ export default {
         "https://www.puercn.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZEU9IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--65035e1c0e2c7a1ea5d07ed13f61914bec414bc3/9.png",
         "https://www.puercn.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZEE9IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--09ea347255ce278b457911922f23a04eaa6218a4/11.jpg",
         "https://www.puercn.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBY3c9IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--a31c6bc3f77dba2fa4eaf7ac39506c24785e1659/15.png",
-      ],
-      aritcles: [
-        {
-          id: "1",
-          aritcle_title: "123",
-          aritcle_img: "",
-          article_type: "",
-          comments: 0,
-          star: 0,
-          sub_time: 0,
-        },
-        {
-          id: "2",
-          aritcle_title: "",
-          aritcle_img: "",
-          article_type: "",
-          comments: 0,
-          star: 0,
-          sub_time: 0,
-        },
-        {
-          id: "3",
-          aritcle_title: "",
-          aritcle_img: "",
-          article_type: "",
-          comments: 0,
-          star: 0,
-          sub_time: 0,
-        }
       ],
     };
   },

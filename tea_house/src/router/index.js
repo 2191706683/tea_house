@@ -95,28 +95,14 @@ const routes = [
         component: () => import('@/views/Brand')
     },
     {
-        path: '/test',
-        name: 'test',
-        component: () => import('@/components/circleList.vue')
-    },
-    {
         path: '/search',
         name: 'search',
         component: () => import('@/views/Search')
     },
     // {
-    //     path: '/buy',
-    //     name: 'buy',
-    //     meta: {
-    //         requiredLogin: true,
-    //         index: 3
-    //     },
-    //     component: () => import('@/views/Buy/Index.vue')
-    // },
-    // {
     //     path: '/login',
     //     name: 'login',
-    //     component: () => import('@/views/Login/Index.vue')
+    //     component: () => import('@/views/Login')
     // },
     {
         path: '/404',

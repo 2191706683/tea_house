@@ -1,6 +1,6 @@
 <template>
     <div class="car_tag">
-        <span class="car_tagitem" v-for="(item, index) in cartag" :key="index">{{item.tag}}</span>
+        <span class="car_tagitem" v-for="(item, index) in cartag" :key="item.id">{{item.tag}}</span>
     </div>
 </template>
 
@@ -10,14 +10,14 @@ export default {
   data() {
     return {
         cartag: [ 
-            { "id": "", "tag": "15-20万" },
-            { "id": "", "tag": "25-35万" },
-            { "id": "", "tag": "轿车" },
-            { "id": "", "tag": "SUV" },
-            { "id": "", "tag": "纯电动" },
-            { "id": "", "tag": "插电混动" },
-            { "id": "", "tag": "增程式" },
-            { "id": "", "tag": "更多条件" }
+            { "id": "1", "tag": "15-20万" },
+            { "id": "2", "tag": "25-35万" },
+            { "id": "3", "tag": "轿车" },
+            { "id": "4", "tag": "SUV" },
+            { "id": "5", "tag": "纯电动" },
+            { "id": "6", "tag": "插电混动" },
+            { "id": "7", "tag": "增程式" },
+            { "id": "8", "tag": "更多条件" }
         ]
     }
   }
