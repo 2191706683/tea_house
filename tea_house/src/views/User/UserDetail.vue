@@ -11,7 +11,7 @@
         src="https://img01.yzcdn.cn/vant/cat.jpeg"
       />
       <h2>u537949</h2>
-      <van-row type="flexible">
+      <van-row type="">
         <van-icon name="calendar-o" /> 2023-09-03 加入<br />
         0 关注 0 粉丝
       </van-row>

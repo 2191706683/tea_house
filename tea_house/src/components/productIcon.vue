@@ -1,7 +1,7 @@
 <template>
   <div class="car_icon">
     <div
-      @click="gotoPage(item.urlName)"
+      @click="gotoPage('productList')"
       class="car_icon_item"
       v-for="(item, index) in caricon"
       :key="index"

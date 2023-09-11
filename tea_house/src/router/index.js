@@ -20,6 +20,30 @@ const routes = [
         component: () => import('@/views/Product')
     },
     {
+        path: '/productList',
+        name: 'productList',
+        meta: {
+            requiredLogin: true,
+        },
+        component: () => import('@/views/Product/ProductList.vue')
+    },
+    {
+        path: '/productDetail',
+        name: 'productDetail',
+        meta: {
+            requiredLogin: true,
+        },
+        component: () => import('@/views/Product/ProductDetail.vue')
+    },
+    {
+        path: '/productForm',
+        name: 'productForm',
+        meta: {
+            requiredLogin: true,
+        },
+        component: () => import('@/views/Product/ProductForm.vue')
+    },
+    {
         path: '/circle',
         name: 'circle',
         meta: {
@@ -72,22 +96,6 @@ const routes = [
         name: 'search',
         component: () => import('@/views/Search')
     },
-    // {
-    //     path: '/search',
-    //     name: 'search',
-    //     meta: {
-    //         index: 2
-    //     },
-    //     component: () => import('@/views/Search/Index.vue')
-    // },
-    // {
-    //     path: '/detail',
-    //     name: 'detail',
-    //     meta: {
-    //         index: 2
-    //     },
-    //     component: () => import('@/views/Detail/Index.vue')
-    // },
     // {
     //     path: '/buy',
     //     name: 'buy',
