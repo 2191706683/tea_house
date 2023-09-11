@@ -12,8 +12,14 @@
     </template>
     <template #right>
       <van-icon
-        v-if="iconName === 'search'"
+        v-if="iconName === 'search' && route !== 'search'"
         @click="goToPage('search')"
+        :name="iconName"
+        color="#000"
+        size="24"
+      />
+      <van-icon
+        v-if="iconName === 'search' && route === 'search'"
         :name="iconName"
         color="#000"
         size="24"
@@ -46,11 +52,17 @@ export default {
     },
     iconName: {
       type: String,
-      default: "search"
-    }
+      default: "search",
+    },
   },
   data() {
-    return {};
+    return {
+      route: null
+    };
+  },
+  mounted() {
+    // console.log(this.$route, 'iojoieois');
+    this.route = this.$route.name
   },
   methods: {
     onClickLeft() {

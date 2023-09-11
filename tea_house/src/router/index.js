@@ -3,13 +3,13 @@ const routes = [
         path: '/',
         name: 'home',
         component: () => import('@/views/Home')
-        
+
     },
     {
         path: '/articleDetail',
         name: 'articleDetail',
         component: () => import('@/views/Home/ArticleDetail')
-        
+
     },
     {
         path: '/product',
@@ -52,6 +52,14 @@ const routes = [
         component: () => import('@/views/Circle')
     },
     {
+        path: '/circleDetail',
+        name: 'circleDetail',
+        meta: {
+            requiredLogin: true,
+        },
+        component: () => import('@/views/Circle/CircleDetail.vue')
+    },
+    {
         path: '/evaluation',
         name: 'evaluation',
         meta: {
@@ -77,7 +85,7 @@ const routes = [
         name: 'setting',
         component: () => import('@/views/User/SetUser.vue'),
     },
-    
+
     {
         path: '/brand',
         name: 'brand',

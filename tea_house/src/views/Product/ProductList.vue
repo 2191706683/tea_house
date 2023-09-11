@@ -51,22 +51,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="container">
-                <div class="item-left">
-                    <a href="#"></a>
-                </div>
-                <div class="item-right">
-                    <a href="#"></a>
-                </div>
-            </div>
-            <div class="container">
-                <div class="item-left">
-                    <a href="#"></a>
-                </div>
-                <div class="item-right">
-                    <a href="#"></a>
-                </div>
-            </div> -->
     </div>
     <!-- 导航栏 -->
     <Tabbar> </Tabbar>

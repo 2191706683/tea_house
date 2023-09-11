@@ -1,5 +1,5 @@
 <template>
-  <div class="circleList">
+  <div class="circleList" @click="gotoPage('circleDetail')">
     <span class="circleList_left"
       ><van-image
         width="50"
@@ -10,7 +10,7 @@
     <span class="circleList_right">
       <div>
         <span class="userName">人在草上 </span>
-        <span style="color: #727272;"> 随手拍 · 4小时前</span>
+        <span style="color: #727272"> 随手拍 · 4小时前</span>
       </div>
       <div class="circle_title">广东的茶友不太友好，小黄驾到，怎无人诚邀！</div>
       <div class="circleList_img">
@@ -38,8 +38,8 @@
     </span>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {
   name: "tabbar",
   data() {
@@ -50,9 +50,14 @@ export default {
       sub_time: 4,
     };
   },
+  methods: {
+    gotoPage(urlName) {
+      this.$router.push({ name: urlName });
+    },
+  },
 };
 </script>
-  <style>
+<style>
 .circleList {
   display: flex;
   padding: 20px 16px;
@@ -75,17 +80,16 @@ export default {
   color: #484848;
 }
 .circle_title {
-    height: 50px;
-    line-height: 50px;
-    font-size: 16px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 16px;
 }
 .circle_bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 54%;
-    height: 40px;
-    line-height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 54%;
+  height: 40px;
+  line-height: 40px;
 }
 </style>
-  
