@@ -1,6 +1,17 @@
 import axios from './config.js'
 
-// 对本地/detail路由发送get请求，获取详情页面数据
 export const getProductList = () => {
     return axios.get('/teaHouse/getProductList')
+}
+
+export const getProductIcon = () => {
+    return axios.get('/teaHouse/getProductIcon')
+}
+
+export const getProductTag = () => {
+    return axios.get('/teaHouse/getProductTag')
+}
+
+export const getProductIndex = () => {
+    return axios.get('/teaHouse/getCarIndex')
 }
