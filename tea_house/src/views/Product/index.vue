@@ -13,6 +13,7 @@ import Tabbar from "../../components/tabbar";
 import TeaIndex from "../../components/teaIndex";
 import TeaTag from "../../components/teaTag";
 import ProductIcon from "../../components/productIcon";
+import { getProductList } from '@/api/product'
 export default {
   name: "product",
   components: { Tabbar, TeaIndex, TeaTag, ProductIcon },
@@ -25,6 +26,10 @@ export default {
     gotoPage(urlName) {
       this.$router.push({name: urlName})
     }
+  },
+  async mounted() {
+    let res = await getProductList()
+    console.log(res.data, 'product')
   }
 };
 </script>

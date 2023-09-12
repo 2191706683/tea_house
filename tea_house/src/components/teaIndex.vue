@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-index-bar class="carindex_bar">
-      <div v-for="item in carindex">
+      <div v-for="(item, index) in carindex">
         <van-index-anchor class="carindex_anchor" :index="item.title">
           <span class="carindex_title">{{ item.title }}</span>
         </van-index-anchor>
@@ -24,6 +24,7 @@ export default {
   },
   data() {
     return {
+        // titleArray: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
         carindex: [
         {
             "title": "A",
