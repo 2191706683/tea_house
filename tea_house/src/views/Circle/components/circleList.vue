@@ -2,7 +2,7 @@
   <div>
     <div
       v-for="(item, index) in circleList"
-      :key="item.id"
+      :key="index"
       class="circleList"
       @click="gotoPage('circleDetail')"
     >
@@ -17,19 +17,10 @@
         <div class="circle_title">{{ item.circle_content }}</div>
         <div class="circleList_img">
           <van-image
+            v-for="(img, index) in item.circle_img"
             width="84"
             height="84"
-            src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
-          />
-          <van-image
-            width="84"
-            height="84"
-            src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
-          />
-          <van-image
-            width="84"
-            height="84"
-            src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+            :src="img"
           />
         </div>
         <div class="circle_bottom">
@@ -43,42 +34,44 @@
 </template>
 
 <script>
+import { getCircleList } from "@/api/circle.js"
 export default {
   name: "tabbar",
   data() {
     return {
-      circleList: [
-        {
-          id: "1",
-          avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-          nickname: "人在草上",
-          circle_type: "随手拍",
-          circle_time: 4,
-          circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
-          comments: 8,
-          last_comments: 20,
-        },
-        {
-          id: "2",
-          avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-          nickname: "人在草上",
-          circle_type: "随手拍",
-          circle_time: 4,
-          circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
-          comments: 8,
-          last_comments: 20,
-        },
-        {
-          id: "3",
-          avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-          nickname: "人在草上",
-          circle_type: "随手拍",
-          circle_time: 4,
-          circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
-          comments: 8,
-          last_comments: 20,
-        },
-      ],
+      // circleList: [
+      //   {
+      //     id: "1",
+      //     avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
+      //     nickname: "人在草上",
+      //     circle_type: "随手拍",
+      //     circle_time: 4,
+      //     circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
+      //     comments: 8,
+      //     last_comments: 20,
+      //   },
+      //   {
+      //     id: "2",
+      //     avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
+      //     nickname: "人在草上",
+      //     circle_type: "随手拍",
+      //     circle_time: 4,
+      //     circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
+      //     comments: 8,
+      //     last_comments: 20,
+      //   },
+      //   {
+      //     id: "3",
+      //     avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
+      //     nickname: "人在草上",
+      //     circle_type: "随手拍",
+      //     circle_time: 4,
+      //     circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
+      //     comments: 8,
+      //     last_comments: 20,
+      //   },
+      // ],
+      circleList: []
     };
   },
   methods: {
@@ -86,6 +79,11 @@ export default {
       this.$router.push({ name: urlName });
     },
   },
+  async mounted() {
+    let res = await getCircleList();
+    console.log(res.data, 304)
+    this.circleList = res.data
+  }
 };
 </script>
 <style>
@@ -111,7 +109,7 @@ export default {
   color: #484848;
 }
 .circle_title {
-  height: 50px;
+  height: auto;
   padding: 10px 0;
   /* line-height: 50px; */
   font-size: 16px;

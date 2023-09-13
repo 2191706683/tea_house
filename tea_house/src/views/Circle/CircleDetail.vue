@@ -22,19 +22,7 @@
       </div>
 
       <div class="box5">
-        <div class="items">
-          <img
-            class="img2"
-            src="https://oss.puercn.com/fill/300/300/chayou/topic_photos/000/986/633/original/7cdf209b3da1bd90c29ea25c7918fced.jpg"
-          />
-        </div>
-        <div class="items">
-          <img
-            class="img2"
-            src="https://oss.puercn.com/fill/300/300/chayou/topic_photos/000/986/637/original/c5f171b80b06456181b6516edba34b3f.jpg"
-          />
-        </div>
-        <div class="items">
+        <div v-for="item in 3" class="items">
           <img
             class="img2"
             src="https://oss.puercn.com/fill/300/300/chayou/topic_photos/000/986/633/original/7cdf209b3da1bd90c29ea25c7918fced.jpg"
@@ -44,14 +32,16 @@
       <p style="font-size: 15px">22条回复</p>
     </div>
     <hr />
+    <CircleComents />
   </div>
 </template>
 
 <script>
 import Tabbar from "../../components/tabbar";
+import CircleComents from "./components/circleComents.vue";
 export default {
   name: "product",
-  components: { Tabbar },
+  components: { Tabbar, CircleComents },
   data() {
     return {
       active: 3,
