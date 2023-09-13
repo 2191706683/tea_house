@@ -1,37 +1,34 @@
 <template>
-  <div>
+  <div style="margin-top: 10px">
     <div v-for="(item, index) in circleList" :key="index" class="circleList">
-      <div style="display: flex">
-        <span class="circleList_left"
-          ><van-image width="30" height="30" round :src="item.avatar"
-        /></span>
-        <span class="circleList_right">
-          <div>
-            <span class="userName">{{ item.nickname }} </span>
-            <span style="color: #727272">
-              {{ item.circle_type }} · {{ item.circle_time }}小时前</span
-            >
-          </div>
-          <div class="circle_title">{{ item.circle_content }}</div>
-          <!-- <div class="circleList_img">
-          <van-image
-            v-for="(img, index) in item.circle_img"
-            width="84"
-            height="84"
-            :src="img"
-          />
-        </div> -->
-          <div class="circle_bottom">
-            <span @click="changeGood(item)"
-              ><van-icon v-if="!item.isLike" size="18" name="good-job-o" />
-              <van-icon v-else size="18" name="good-job" />
-              赞{{ item.comments }}</span
-            >
-            <span @click="showPopup"><van-icon size="18" name="chat-o" />回复</span>
-          </div>
-        </span>
-      </div>
-      <CircleReply />
+      <span class="circleList_left"
+        ><van-image width="30" height="30" round :src="item.avatar"
+      /></span>
+      <span class="circleList_right">
+        <div>
+          <span class="userName">{{ item.nickname }} </span>
+          <span style="color: #727272">
+            {{ item.circle_type }} · {{ item.circle_time }}小时前</span
+          >
+        </div>
+        <div class="circle_title">{{ item.circle_content }}</div>
+        <!-- <div class="circleList_img">
+            <van-image
+              v-for="(img, index) in item.circle_img"
+              width="84"
+              height="84"
+              :src="img"
+            />
+          </div> -->
+        <div class="circle_bottom">
+          <span @click="changeGood(item)"
+            ><van-icon v-if="!item.isLike" size="18" name="good-job-o" />
+            <van-icon v-else size="18" name="good-job" />
+            赞{{ item.comments }}</span
+          >
+          <span @click="showPopup"><van-icon size="18" name="chat-o" />回复</span>
+        </div>
+      </span>
     </div>
     <van-popup position="bottom" v-model="show1">
       <van-field
@@ -44,7 +41,7 @@
         placeholder="请输入留言"
         show-word-limit
       />
-      <div style="display: flex; justify-content: end">
+      <div style="display:flex;justify-content: end;">
         <van-button size="small" type="primary">提交</van-button>
       </div>
     </van-popup>
@@ -52,11 +49,9 @@
 </template>
 
 <script>
-import CircleReply from "./circleReply.vue";
 import { getCircleList } from "@/api/circle.js";
 export default {
   name: "circleComponent",
-  components: { CircleReply },
   data() {
     return {
       value: "",
@@ -128,16 +123,15 @@ export default {
 <style scoped>
 .circleList {
   display: flex;
-  padding: 20px 16px;
-  flex-wrap: wrap;
-  /* border: 1px solid skyblue; */
+  padding: 10px 12px;
+  margin-left: 30px;
 }
 .circleList_left {
-  width: 12%;
+  width: 16%;
 }
 /* .circleList_right {
-  width: 60%;
-} */
+    width: 60%;
+  } */
 .circleList_img {
   display: flex;
   box-sizing: border-box;
@@ -156,6 +150,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 34%;
+  width: 40%;
 }
 </style>

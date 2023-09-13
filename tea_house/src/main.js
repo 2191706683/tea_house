@@ -18,6 +18,14 @@ const router = new VueRouter({
   routes: routes
 })
 
+router.beforeEach((to, from, next) => {
+  // if (from.name === 'circle') {
+  //   location.reload();
+  //   console.log('/////')
+  // }
+  // console.log(from)
+  next()
+})
 new Vue({
   render: h => h(App),
   router: router

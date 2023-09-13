@@ -31,8 +31,31 @@
       </div>
       <p style="font-size: 15px">22条回复</p>
     </div>
-    <hr />
     <CircleComents />
+    <van-search
+      v-model="value"
+      @click="showPopup"
+      class="comment_search"
+      placeholder="写下你的留言"
+      background="#fff"
+      shape="round"
+      left-icon=""
+    />
+    <van-popup position="bottom" v-model="show1">
+      <van-field
+        v-model="message"
+        rows="4"
+        autosize
+        label="留言"
+        type="textarea"
+        maxlength="50"
+        placeholder="请输入留言"
+        show-word-limit
+      />
+      <div style="display:flex;justify-content: end;">
+        <van-button size="small" type="primary">提交</van-button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -45,6 +68,11 @@ export default {
   data() {
     return {
       active: 3,
+      isNum: 0,
+      value: "",
+      show1: false,
+      show2: false,
+      message: "",
     };
   },
   methods: {
@@ -52,10 +80,25 @@ export default {
       console.log("???");
       history.back();
     },
+    showPopup() {
+      this.show1 = true;
+    },
+  },
+  mounted() {
+    // if (this.isNum == 0) {
+    //   // location.reload();
+    // }
+    // this.isNum++;
+    // this.$router.push({name: "circleDetail"})
+    // this.$router.go(0)
   },
 };
 </script>
-<style>
+<style scoped>
+.comment_search {
+  position: sticky;
+  bottom: 0px;
+}
 .box5 {
   width: 90%;
   height: 90%;
