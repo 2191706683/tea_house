@@ -15,6 +15,7 @@ Vue.use(VueLazyload);
 Vue.config.productionTip = false
 
 const router = new VueRouter({
+  mode: 'hash',
   routes: routes
 })
 

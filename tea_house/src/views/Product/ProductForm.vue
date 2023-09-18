@@ -21,12 +21,6 @@
       </van-panel>
       <br />
 
-      <van-notice-bar
-        mode="closeable"
-        style="background-color: white; color: black"
-        v-for="i in index"
-        >{{ i.text }}</van-notice-bar
-      >
       <br />
       <van-field v-model="text" name="单位" label="单位" placeholder="如：件" />
       <!-- 输入手机号，调起手机号键盘 -->
@@ -55,8 +49,8 @@
       />
       <!-- 输入密码 -->
       <van-field
-        v-model="password"
-        type="password"
+        v-model="word"
+        type="word"
         name="手机号"
         label="手机号"
         placeholder="如：12345"
@@ -64,6 +58,10 @@
       <br />
       <div style="justify-content: center; display: flex">
         <van-button type="primary" native-type="submit">提&nbsp;&nbsp;交</van-button>
+      </div>
+      <br /><br />
+      <div style="justify-content: center; display: flex">
+        <van-button type="default" native-type="back">取&nbsp;&nbsp;消</van-button>
       </div>
     </van-form>
   </div>
@@ -85,7 +83,7 @@ export default {
       text: "",
       digit: "",
       number: "",
-      password: "",
+      word: "",
       sale: "",
       buy: "",
       show: true,
@@ -104,7 +102,6 @@ export default {
           tel: "",
         },
       ],
-      index: [{ text: "技术是开发它的人的共同灵魂。" }],
     };
   },
   methods: {

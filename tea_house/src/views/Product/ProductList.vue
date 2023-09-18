@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="productlist_container">
     <!-- logo标签 -->
     <div class="DcdHeader">
       <a class="DcdHeader_img" href="../Home/index.vue">
@@ -12,14 +12,8 @@
         <a class="text-white fs-18 fw-bold" href="#">产品库</a>
       </div>
       <!-- 当前所在位置 -->
-      <div class="text-white fs-18 fw-bold">/ 中茶</div>
+      <div class="text-white fs-18 fw-bold">/ {{title}}</div>
     </div>
-    <!-- 选择筛选 -->
-    <!-- <div class="filters">
-            <div class="nav-item">默认分类</div>
-            <div class="nav-category">全部排序</div>
-            <div class="nav-year">选择分类</div>
-        </div> -->
     <van-dropdown-menu class="filters">
       <van-dropdown-item v-model="value1" :options="option1" />
       <van-dropdown-item v-model="value2" :options="option2" />
@@ -30,20 +24,20 @@
     <div class="item">
       <div class="container">
         <div
-          @click="gotoPage('productDetail')"
+          @click="gotoPage('productDetail', item)"
           class="item-left"
           v-for="(item, index) in items"
           :key="index"
         >
           <a href="#">
-            <img :src="item.image" alt="" />
+            <img :src="item.thumb" alt="" />
           </a>
           <div class="card-body">
             <h3>{{ item.title }}</h3>
             <p>
-              {{ item.tea_one }}
+              {{ item.brand }}
               <span>/</span>
-              {{ item.tea_two }}
+              {{ item.category }}
               <span>/</span>
               {{ item.tea_year }}
             </p>
@@ -59,120 +53,15 @@
 
 <script>
 import Tabbar from "../../components/tabbar";
+import { getProductList } from "@/api/product";
+
 export default {
   name: "product",
   components: { Tabbar },
   data() {
     return {
+      title: "",
       items: [
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/927/medium/0.jpg?1693634686",
-          title: "2023年中茶 荒野古树 生茶 357克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "1280元/片",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/915/medium/0.jpg?1693561350",
-          title: "2023年中茶 德昂酸茶 再加工茶 192克",
-          tea_one: "中茶",
-          tea_two: "",
-          tea_year: "2023年",
-          price: "1280元/盒",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/899/medium/2.jpg?1693472254",
-          title: "2023年中茶 布朗大树 生茶 357克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "699元/片",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/884/medium/1.jpg?1693302643",
-          title: "2023年中茶 曼松 357克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "暂无报价",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/872/medium/14.png?1693209583",
-          title: "2023年中茶 名山茗景迈 生茶 128克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "698元/盒",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/856/medium/2.png?1693105967",
-          title: "2023年中茶 名山茗冰岛老寨 生茶 128克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "5680元/盒",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/927/medium/0.jpg?1693634686",
-          title: "2023年中茶 荒野古树 生茶 357克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "1280元/片",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/915/medium/0.jpg?1693561350",
-          title: "2023年中茶 德昂酸茶 再加工茶 192克",
-          tea_one: "中茶",
-          tea_two: "",
-          tea_year: "2023年",
-          price: "1280元/盒",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/899/medium/2.jpg?1693472254",
-          title: "2023年中茶 布朗大树 生茶 357克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "699元/片",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/884/medium/1.jpg?1693302643",
-          title: "2023年中茶 曼松 357克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "暂无报价",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/872/medium/14.png?1693209583",
-          title: "2023年中茶 名山茗景迈 生茶 128克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "698元/盒",
-        },
-        {
-          image:
-            "https://assets.puercn.com/xsystem/photos/images/000/126/856/medium/2.png?1693105967",
-          title: "2023年中茶 名山茗冰岛老寨 生茶 128克",
-          tea_one: "中茶",
-          tea_two: "生茶",
-          tea_year: "2023年",
-          price: "5680元/盒",
-        },
       ],
       value1: 0,
       value2: "a",
@@ -195,14 +84,30 @@ export default {
     };
   },
   methods: {
-    gotoPage(urlName) {
-      this.$router.push({ name: urlName });
+    gotoPage(urlName, item) {
+      this.$router.push({ name: urlName, params: {data: item}});
     },
   },
+  async mounted() {
+    // console.log(this.$route.params.data, 30)
+    if (typeof this.$route.params.data !== "undefined") {
+      localStorage.setItem("productlist", JSON.stringify(this.$route.params.data))
+    }
+    this.state = JSON.parse(localStorage.getItem("productlist")) || this.$route.params.data;
+    let res = await getProductList({ id: this.state.id });
+    this.items = res.data;
+    this.title = this.state.title;
+    // console.log(this.state)
+  }
 };
 </script>
 
 <style scoped>
+.productlist_container {
+  overflow-x: hidden;
+  height: 99vh;
+  margin-bottom: 15%;
+}
 .DcdHeader {
   display: flex;
   align-items: center;
@@ -289,15 +194,12 @@ export default {
   left: 345px;
   border-top: 10px solid #666666;
 }
-.item {
-  height: 12000px;
-  /* background-color: #57b381; */
-}
+
 .container {
   display: flex;
   height: 340px;
   background-color: #fff;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   flex-wrap: wrap;
 }
 .container .item-left {
@@ -308,6 +210,7 @@ export default {
   height: 290px;
   background-color: #fff;
   margin-top: 10px;
+  margin-left: 2.5%;
   outline: 1px solid gray;
   /* box-shadow: #666666; */
 }
@@ -320,7 +223,7 @@ export default {
 .card-body h3 {
   font-size: 16px !important;
   width: 97%;
-  margin-left: 10px;
+  margin-left: 5px;
   padding: 0;
 }
 .card-body .price {

@@ -13,63 +13,48 @@
     </van-nav-bar>
 
     <div class="h">
-      <h2>韶关乐昌：小小茶叶变身农民致富“黄金叶”</h2>
+      <div><h2 v-html="state.article_title"></h2></div>
     </div>
     <div class="time">
-      <span style="margin-left: 5px">
-        2023-09-05 09:28 <br />
-        编辑：一抹阳光
-      </span>
+      <span style="margin-left: 5px"> 2023-09-05 09:28 <br /> </span>
     </div>
+    <img class="img1" :src="state.article_img" />
     <div class="p1">
-      <img
-        class="img1"
-        :src="img"
-      />
-      <div v-html="content"></div>
+      <div v-html="article_content"></div>
     </div>
   </div>
 </template>
 
 <script>
 import Tabbar from "../../components/tabbar";
+import { getArticleDetail } from "@/api/home";
 export default {
   name: "product",
   components: { Tabbar },
   data() {
     return {
       active: 3,
-      img: "https://oss.puercn.com/fit/800/800/we/0/chayou/entry_photos/000/986/109/3.jpg",
-      content: `<p>
-        乐昌地处南岭山脉南麓，海拔高、水资源丰富、昼夜温差大，独特地势和特殊气候环境，让乐昌处处都是茶树生长的天然福地。
-        近年来，乐昌市高度重视茶产业发展，印发实施茶叶产业发展和奖补方案，对新建乐昌白毛茶茶园、
-        新建茶叶精深加工厂购置的设施设备和现有茶叶加工厂进行技术、设备改造升级的茶园、茶企给予奖补，
-        通过技术资金支持、制定准入标准、老茶园改造等，提高茶园智能化、机械化水平，促进乐昌茶叶产业实现规范化发展。
-        据统计，自茶叶产业发展和奖补方案实施以来，全市为茶园、茶企发放奖励金共计124万元。
-      </p>
-      <p>
-        2021年，乐昌市成立茶叶协会，实现从茶园管理到加工制茶，再到推广营销和品牌打造，
-        擦亮了“乐昌白毛茶”金字招牌，乐昌已被认定为“沿溪山白毛尖”广东省特色农产品优势区。
-        2023年，乐昌市举办茶文化节系列活动，乐昌白毛茶区域公用品牌LOGO亮相广州、
-        乐昌市人民政府与广东省农业科学院茶叶研究所签署茶产业高质量发展合作框架协议，
-        借力广东省农业科学院茶叶研究所力量，提升“乐昌白毛茶”历史名茶工艺和品质特征，助力乐昌茶叶产业高质量发展。
-      </p>
-      <p>
-        如今，小小的茶叶已成为这片沃土上农民们的“黄金叶”，成为农民增收致富的绿色产业，
-        成为乐昌市全面推进乡村振兴、促进区域协调发展的重要产业，乐昌茶产业已逐渐呈现出一二三产业融合发展态势。
-      </p>
-      <p>文/羊城晚报全媒体记者 李泽宇 通讯员 方朋帮 曾长 陈艺</p>
-      <p>来源 | 羊城晚报·羊城派</p>
-      <p>信息贵在分享，如涉及版权问题请联系删除</p>`,
+      state: {
+        article_title: "",
+        article_img: "",
+      },
+      article_content:
+        "<p>5月15日，在2023“一带一路”国际茶叶贸易交流会暨第五届湖北(鹤峰)茶商大会上，农业农村部科教司原副巡视员、中国农业国际合作促进会茶产业专家委员会副主任委员李芹发布了安溪铁观音、普洱茶、太平猴魁、福鼎白茶、福州茉莉花茶等70个区域公用品牌的影响力指数。</p><p>在“中国茶叶区域公用品牌的影响力指数名单”中，安溪铁观音以788.64的影响力指数位居名单第一。在福建省安溪县，茶产业发展到了什么程度?茶与自然如何相处?地方又采取了哪些措施?让安溪铁观音区域公用品牌在品牌、质量、创新、生态方面齐头并进。</p><p>2019-2021年，三年来安溪县茶园面积保持60万亩未做改变，三年地方宣传费用也未做调整，但安溪产值实现了逐年递增，产值从19年191亿元增长到21年280亿元，茶农收入也增长到了2.09万元。</p><p>华祥苑茶庄园/图源安溪县政府网站</p><p>自2018年起，安溪县连续获评“中国茶业百强县”;2019年4月，安溪县被农业农村部、财政部联合授予国家现代农业产业园;2020年11月，安溪县获评“‘十三五’茶业发展十强县”;2021年11月，被国家农业农村部评为全国农业全产业链典型县(茶叶);这些成绩的背后，是安溪县在茶产业发展上“下的”大力气。</p><p>来源：中农促茶产业分会</p><p>如有侵权请联系删除</p>",
     };
   },
   methods: {
     onClickLeft() {
       history.back();
     },
-    goToPage(path) {
-      this.$router.push({ name: path });
-    },
+  },
+  async mounted() {
+    // console.log(this.$route.params, "params");
+    if (this.$route.params.id) {
+      localStorage.setItem("articleDetail", JSON.stringify(this.$route.params))
+    }
+    this.state = JSON.parse(localStorage.getItem("articleDetail")) || this.$route.params;
+    let res = await getArticleDetail({ id: this.state.id });
+    this.article_content = res.data.article_content;
   },
 };
 </script>
@@ -77,20 +62,25 @@ export default {
 .h {
   margin-left: 5px;
 }
+
 .l {
   margin-top: -1px;
 }
+
 .r {
   color: white;
 }
+
 .left-text {
   color: white;
 }
+
 .time {
   margin-top: -10px;
   color: #778899;
   display: flex;
 }
+
 .body {
   box-sizing: border-box;
   line-height: 0.7rem;
@@ -100,9 +90,11 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 p {
   margin-left: 5px;
 }
+
 .p1 {
   margin: auto;
   width: 96%;
@@ -110,10 +102,13 @@ p {
   text-indent: 32px;
   font-family: 微软幼黑;
 }
+
 .img1 {
   margin: auto;
-  width: 98%;
+  width: 100%;
+  align-items: center;
 }
+
 input {
   margin-left: 5px;
   border-radius: 25px;

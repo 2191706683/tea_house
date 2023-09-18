@@ -1,7 +1,7 @@
 <template>
   <div class="car_icon">
     <div
-      @click="gotoPage('productList')"
+      @click="gotoPage('productList', item)"
       class="car_icon_item"
       v-for="(item, index) in caricon"
       :key="index"
@@ -10,7 +10,8 @@
     </div>
   </div>
 </template>
-  <script>
+<script>
+import { getProductIcon } from "@/api/product";
 export default {
   name: "teaIndex",
   props: {
@@ -21,72 +22,25 @@ export default {
   },
   data() {
     return {
-      caricon: [
-        {
-          id: "1",
-          title: "茶友圈",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F004%2Fthumb%2Fzhong-cha.jpg%3F1603437372&w=128&q=75",
-        },
-        {
-          id: "2",
-          title: "品牌库",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F001%2Fthumb%2Fda-yi.jpg%3F1603437194&w=128&q=75",
-        },
-        {
-          id: "3",
-          title: "产品库",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F004%2Fthumb%2Fzhong-cha.jpg%3F1603437372&w=128&q=75",
-        },
-        {
-          id: "4",
-          title: "评测中心",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F004%2Fthumb%2Fzhong-cha.jpg%3F1603437372&w=128&q=75",
-        },
-        {
-          id: "5",
-          title: "茶窝网",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F004%2Fthumb%2Fzhong-cha.jpg%3F1603437372&w=128&q=75",
-        },
-        {
-          id: "6",
-          title: "茶友圈",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F004%2Fthumb%2Fzhong-cha.jpg%3F1603437372&w=128&q=75",
-        },
-        {
-          id: "7",
-          title: "品牌库",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F001%2Fthumb%2Fda-yi.jpg%3F1603437194&w=128&q=75",
-        },
-        {
-          id: "8",
-          title: "产品库",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F004%2Fthumb%2Fzhong-cha.jpg%3F1603437372&w=128&q=75",
-        },
-        {
-          id: "9",
-          title: "评测中心",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F004%2Fthumb%2Fzhong-cha.jpg%3F1603437372&w=128&q=75",
-        },
-        {
-          id: "10",
-          title: "茶窝网",
-          icon: "https://m.puercn.com/_next/image/?url=https%3A%2F%2Fassets.puercn.com%2Fxsystem%2Fbrands%2Flogos%2F000%2F000%2F004%2Fthumb%2Fzhong-cha.jpg%3F1603437372&w=128&q=75",
-        },
-      ],
+      caricon: [],
     };
   },
   methods: {
-    gotoPage(urlName) {
+    gotoPage(urlName, item) {
       // if (urlName == 'NotFound') {
       //   window.location.href = 'https://www.chawo.com/wap/#/'
       // }
-      this.$router.push({ name: urlName });
+      this.$router.push({ name: urlName, params: {data: item} });
     },
+  },
+  async mounted() {
+    let res = await getProductIcon();
+    this.caricon = res.data
   },
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .car_icon {
   margin-top: 10px;
   display: flex;
@@ -112,4 +66,3 @@ export default {
   border: 1px solid #d1cfcf;
 }
 </style>
-  

@@ -29,7 +29,7 @@ export default {
   },
   async mounted() {
     let res = await getProductList()
-    console.log(res.data, 'product')
+    // console.log(res.data, 'product')
   }
 };
 </script>

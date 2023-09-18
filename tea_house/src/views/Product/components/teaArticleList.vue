@@ -15,13 +15,13 @@
           :src="item.article_img"
         />
       </div>
-      <div class="teaArticle_bottom">
+      <!-- <div class="teaArticle_bottom">
         <span
           >{{ item.article_type }} {{ item.comments }}评 ·{{ item.likes }}赞 ·{{
             item.publishSinceTime
           }}小时前</span
         >
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

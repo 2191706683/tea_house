@@ -8,9 +8,6 @@
         <span class="circleList_right">
           <div>
             <span class="userName">{{ item.nickname }} </span>
-            <span style="color: #727272">
-              {{ item.circle_type }} · {{ item.circle_time }}小时前</span
-            >
           </div>
           <div class="circle_title">{{ item.circle_content }}</div>
           <!-- <div class="circleList_img">
@@ -25,13 +22,13 @@
             <span @click="changeGood(item)"
               ><van-icon v-if="!item.isLike" size="18" name="good-job-o" />
               <van-icon v-else size="18" name="good-job" />
-              赞{{ item.comments }}</span
+              赞{{ item.likes }}</span
             >
-            <span @click="showPopup"><van-icon size="18" name="chat-o" />回复</span>
+            <span @click="showPopup(item)"><van-icon size="18" name="chat-o" />回复</span>
           </div>
         </span>
       </div>
-      <CircleReply />
+      <CircleReply :circle_id="this.circle_id" :comment_id="item.id" :reply="item.child"/>
     </div>
     <van-popup position="bottom" v-model="show1">
       <van-field
@@ -41,11 +38,11 @@
         label="留言"
         type="textarea"
         maxlength="50"
-        placeholder="请输入留言"
+        :placeholder="placeholder"
         show-word-limit
       />
       <div style="display: flex; justify-content: end">
-        <van-button size="small" type="primary">提交</van-button>
+        <van-button size="small" type="primary" @click="submitReply">提交</van-button>
       </div>
     </van-popup>
   </div>
@@ -53,75 +50,87 @@
 
 <script>
 import CircleReply from "./circleReply.vue";
-import { getCircleList } from "@/api/circle.js";
+import { getCircleDetail, addCircleReplys } from "@/api/circle.js";
 export default {
   name: "circleComponent",
   components: { CircleReply },
+  props: ["circle_id"],
   data() {
     return {
       value: "",
       show1: false,
       show2: false,
       message: "",
-      circleList: [
-        {
-          id: "1",
-          avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-          nickname: "人在草上",
-          circle_type: "随手拍",
-          circle_time: 4,
-          circle_content:
-            "广东的茶友发顺丰顺丰顺丰复色光如果 不太友好，小黄驾到，怎无人诚邀！",
-          comments: 8,
-          isLike: false,
-          last_comments: 20,
-        },
-        {
-          id: "2",
-          avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-          nickname: "人在草上",
-          circle_type: "随手拍",
-          circle_time: 4,
-          circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
-          comments: 8,
-          isLike: false,
-          last_comments: 20,
-        },
-        {
-          id: "3",
-          avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-          nickname: "人在草上",
-          circle_type: "随手拍",
-          circle_time: 4,
-          circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
-          comments: 8,
-          isLike: false,
-          last_comments: 20,
-        },
-      ],
-      //   circleList: [],
+      comment_id: "",
+      placeholder: "",
+      replayName: "",
+      // circleList: [
+      //   {
+      //     id: "1",
+      //     circle_id: "1",
+      //     avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
+      //     nickname: "人在草上",
+      //     circle_content:
+      //       "广东的茶友发顺丰顺丰顺丰复色光如果 不太友好，小黄驾到，怎无人诚邀！",
+      //     likes: 8,
+      //     isLike: false,
+      //   },
+      //   {
+      //     id: "2",
+      //     circle_id: "1",
+      //     avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
+      //     nickname: "人在草上",
+      //     circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
+      //     likes: 8,
+      //     isLike: false,
+      //   },
+      //   {
+      //     id: "3",
+      //     circle_id: "1",
+      //     avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
+      //     nickname: "人在草上",
+      //     circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
+      //     likes: 8,
+      //     isLike: false,
+      //   },
+      // ],
+        circleList: [],
     };
   },
   methods: {
     gotoPage(urlName) {
       this.$router.push({ name: urlName });
     },
-    changeGood(item) {
+    async changeGood(item) {
       item.isLike = !item.isLike;
       if (item.isLike) {
-        item.comments++;
+        item.likes++;
       } else {
-        item.comments--;
+        item.likes--;
       }
+      await this.$nextTick();
+      localStorage.setItem(`circle_comment_${this.circle_id}`, JSON.stringify(this.circleList))
     },
-    showPopup() {
+    showPopup(comment) {
       this.show1 = true;
+      this.comment_id = comment.id;
+      this.placeholder = `回复${comment.nickname}`;
+      this.replayName = comment.nickname;
     },
+    async submitReply() {
+      console.log('test', this.comment_id, this.message)
+      await addCircleReplys({comment_id: this.comment_id, circle_content: this.message, replayName: this.replayName})
+      this.show1 = false;
+      let res = await getCircleDetail({id:this.circle_id});
+      localStorage.setItem(`circle_comment_${this.circle_id}`, JSON.stringify(res.data))
+      location.reload();
+    }
   },
   async mounted() {
-    let res = await getCircleList();
-    // console.log(res.data, 304);
-    // this.circleList = res.data;
+    await this.$nextTick();
+    let res = await getCircleDetail({id:this.circle_id});
+    console.log(res.data, 304);
+    this.circleList = JSON.parse(localStorage.getItem(`circle_comment_${this.circle_id}`)) || res.data;
   },
 };
 </script>
@@ -133,11 +142,11 @@ export default {
   /* border: 1px solid skyblue; */
 }
 .circleList_left {
-  width: 12%;
+  width: 40px;
 }
-/* .circleList_right {
-  width: 60%;
-} */
+.circleList_right {
+  width: 310px;
+}
 .circleList_img {
   display: flex;
   box-sizing: border-box;

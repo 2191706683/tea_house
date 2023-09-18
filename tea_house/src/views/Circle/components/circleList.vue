@@ -4,7 +4,7 @@
       v-for="(item, index) in circleList"
       :key="index"
       class="circleList"
-      @click="gotoPage('circleDetail')"
+      @click="gotoPage('circleDetail', item)"
     >
       <span class="circleList_left"
         ><van-image width="50" height="50" round :src="item.avatar"
@@ -17,6 +17,7 @@
         <div class="circle_title">{{ item.circle_content }}</div>
         <div class="circleList_img">
           <van-image
+            style="padding: 4px 0;"
             v-for="(img, index) in item.circle_img"
             width="84"
             height="84"
@@ -24,8 +25,7 @@
           />
         </div>
         <div class="circle_bottom">
-          <span><van-icon name="chat-o" /></span>
-          <span>{{ item.comments }}</span>
+          <span><van-icon name="chat-o" />{{ item.comments }}</span>
           <span>最后回复于{{ item.last_comments }}分钟前</span>
         </div>
       </span>
@@ -75,13 +75,13 @@ export default {
     };
   },
   methods: {
-    gotoPage(urlName) {
-      this.$router.push({ name: urlName });
+    gotoPage(urlName, item) {
+      this.$router.push({ name: urlName, params: {data: item} });
     },
   },
   async mounted() {
     let res = await getCircleList();
-    console.log(res.data, 304)
+    // console.log(res.data, 304)
     this.circleList = res.data
   }
 };
@@ -101,6 +101,7 @@ export default {
 }
 .circleList_img {
   display: flex;
+  flex-wrap: wrap;
   box-sizing: border-box;
   justify-content: space-between;
 }

@@ -1,7 +1,11 @@
 import axios from './config.js'
 
-export const getProductList = () => {
-    return axios.get('/teaHouse/getProductList')
+export const getProductList = (params) => {
+    return axios.post('/teaHouse/getProductList', params)
+}
+
+export const getProductDetail = (params) => {
+    return axios.post('/teaHouse/getProductDetail', params)
 }
 
 export const getProductIcon = () => {
@@ -13,5 +17,5 @@ export const getProductTag = () => {
 }
 
 export const getProductIndex = () => {
-    return axios.get('/teaHouse/getCarIndex')
+    return axios.get('/teaHouse/getProductIndex')
 }

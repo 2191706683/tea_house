@@ -5,12 +5,12 @@
     <div class="h">
       <div class="big">
         <div class="box1">
-          <img class="img1" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+          <img class="img1" :src="state.avatar" />
         </div>
         <div class="box2">
-          <h2 style="margin-top: 5px">人在草木</h2>
+          <h2 style="margin-top: 5px">{{ state.nickname }}</h2>
           <span style="color: #778899; font-size: 3px; font-family: 微软幼黑；"
-            >1天前</span
+            >{{state.circle_time}}天前</span
           >
         </div>
         <div class="box3">
@@ -18,22 +18,27 @@
         </div>
       </div>
       <div class="p1">
-        <p>李白当年诗换酒，斗酒百篇也不愁。吾今穷酸文求茶，一篇一茶熬白头。</p>
+        <p>{{state.circle_content}}</p>
       </div>
 
       <div class="box5">
-        <div v-for="item in 3" class="items">
-          <img
+          <!-- <img
+            v-for="item in state.circle_img"
             class="img2"
-            src="https://oss.puercn.com/fill/300/300/chayou/topic_photos/000/986/633/original/7cdf209b3da1bd90c29ea25c7918fced.jpg"
+            :src="item"
+          /> -->
+          <van-image
+            style="padding: 4px 0;"
+            v-for="(img, index) in state.circle_img"
+            width="100"
+            height="100"
+            :src="img"
           />
-        </div>
       </div>
-      <p style="font-size: 15px">22条回复</p>
+      <p style="font-size: 15px">{{state.comments}}条回复</p>
     </div>
-    <CircleComents />
+    <CircleComents :circle_id="state.id"/>
     <van-search
-      v-model="value"
       @click="showPopup"
       class="comment_search"
       placeholder="写下你的留言"
@@ -52,8 +57,8 @@
         placeholder="请输入留言"
         show-word-limit
       />
-      <div style="display:flex;justify-content: end;">
-        <van-button size="small" type="primary">提交</van-button>
+      <div style="display: flex; justify-content: end">
+        <van-button size="small" type="primary" @click="submitComments">提交</van-button>
       </div>
     </van-popup>
   </div>
@@ -62,6 +67,7 @@
 <script>
 import Tabbar from "../../components/tabbar";
 import CircleComents from "./components/circleComents.vue";
+import { addCircleComments, getCircleDetail } from "@/api/circle"
 export default {
   name: "product",
   components: { Tabbar, CircleComents },
@@ -69,10 +75,10 @@ export default {
     return {
       active: 3,
       isNum: 0,
-      value: "",
       show1: false,
       show2: false,
       message: "",
+      state: {},
     };
   },
   methods: {
@@ -83,14 +89,20 @@ export default {
     showPopup() {
       this.show1 = true;
     },
+    async submitComments() {
+      console.log('test', this.state.id, this.message)
+      await addCircleComments({circle_id: this.state.id, circle_content: this.message})
+      this.show1 = false;
+      let res = await getCircleDetail({id:this.state.id});
+      localStorage.setItem(`circle_comment_${this.state.id}`, JSON.stringify(res.data))
+      location.reload();
+    }
   },
   mounted() {
-    // if (this.isNum == 0) {
-    //   // location.reload();
-    // }
-    // this.isNum++;
-    // this.$router.push({name: "circleDetail"})
-    // this.$router.go(0)
+    this.state = this.$route.params.data || JSON.parse(localStorage.getItem(`circle_state`));
+    // console.log(this.state, 222);
+    window.localStorage.setItem(`circle_state`, JSON.stringify(this.state))
+    
   },
 };
 </script>
@@ -102,19 +114,10 @@ export default {
 .box5 {
   width: 90%;
   height: 90%;
-  border: 10px solid white;
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-evenly;
-}
-.items {
-  width: 97px;
-  height: 110px;
-  border: 1px solid white;
-}
-.img2 {
-  width: 97px;
-  height: 110px;
-  border: 1px solid white;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 p {
   margin-left: 3px;

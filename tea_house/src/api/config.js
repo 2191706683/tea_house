@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 设置默认域名
 // axios.defaults.baseURL = '//backend-api-01.newbee.ltd/api/v1'
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = 'http://127.0.0.1:3000'
 // 请求头 带上 Content-Type
 axios.defaults.headers['Authorization'] = localStorage.getItem('token') || ''
 

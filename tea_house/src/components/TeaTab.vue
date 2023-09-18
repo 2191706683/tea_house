@@ -1,15 +1,10 @@
 <template>
   <div>
     <van-tabs line-height="0">
-      <van-tab v-for="index in 8">
+      <van-tab v-for="item in circleTabList">
         <template #title>
-          <van-image
-            width="70"
-            height="70"
-            round
-            src="https://img01.yzcdn.cn/vant/cat.jpeg"
-          />
-          <div style="text-align: center;">选项</div>
+          <van-image width="60" height="60" round :src="item.tabImg" />
+          <div style="text-align: center">{{ item.tabTitle }}</div>
         </template>
       </van-tab>
     </van-tabs>
@@ -17,14 +12,19 @@
 </template>
 
 <script>
-    export default {
-        name: "teaTab",
-        data() {
-            return {
-                // active:
-            }
-        }
-    }
+import { getCircleTabList } from "@/api/circle"
+export default {
+  name: "teaTab",
+  data() {
+    return {
+      circleTabList: [],
+    };
+  },
+  async mounted() {
+    let res = await getCircleTabList()
+    this.circleTabList = res.data
+  }
+};
 </script>
 
 <style>
