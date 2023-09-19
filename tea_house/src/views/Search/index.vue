@@ -41,7 +41,8 @@ export default {
       }
     },
     onCancel() {
-      history.back()
+      // history.back()
+      this.$router.back() 
     } 
   },
 };

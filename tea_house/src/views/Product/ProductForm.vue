@@ -3,7 +3,7 @@
     <van-form @submit="onSubmit">
       <van-panel title="" desc="需求类型" status="">
         <div>
-          <van-radio-group v-model="radio" name="需求类型">
+          <van-radio-group v-model="radio" name="require_type">
             <van-cell-group>
               <van-cell title="出售" name="出售" clickable @click="radio = '出售'">
                 <template #right-icon>
@@ -22,12 +22,12 @@
       <br />
 
       <br />
-      <van-field v-model="text" name="单位" label="单位" placeholder="如：件" />
+      <van-field v-model="text" name="unit" label="单位" placeholder="如：件" />
       <!-- 输入手机号，调起手机号键盘 -->
       <van-field
         v-model="tel"
         type="tel"
-        name="报价"
+        name="quotation"
         label="报价"
         placeholder="如：20000 元/件"
       />
@@ -35,7 +35,7 @@
       <van-field
         v-model="digit"
         type="digit"
-        name="数量"
+        name="quantity"
         label="数量"
         placeholder="如：5 件"
       />
@@ -43,7 +43,7 @@
       <van-field
         v-model="number"
         type="number"
-        name="联系人"
+        name="contacts"
         label="联系人"
         placeholder="联系人称呼"
       />
@@ -51,7 +51,7 @@
       <van-field
         v-model="word"
         type="word"
-        name="手机号"
+        name="mobile"
         label="手机号"
         placeholder="如：12345"
       />
@@ -61,7 +61,7 @@
       </div>
       <br /><br />
       <div style="justify-content: center; display: flex">
-        <van-button type="default" native-type="back">取&nbsp;&nbsp;消</van-button>
+        <van-button @click="onClickLeft" type="default" native-type="back">取&nbsp;&nbsp;消</van-button>
       </div>
     </van-form>
   </div>
@@ -74,6 +74,8 @@ import { Field } from "vant";
 Vue.use(Field);
 
 import Tabbar from "../../components/tabbar";
+import { addSaleForm } from "@/api/product"
+import { Toast } from "vant";
 export default {
   name: "user",
   components: { Tabbar },
@@ -105,6 +107,10 @@ export default {
     };
   },
   methods: {
+    onClickLeft() {
+      // history.back();
+      this.$router.back() 
+    },
     gotoPage() {
       this.$router.push({ path: "" });
     },
@@ -117,9 +123,12 @@ export default {
       Toast("选择" + contact.id);
     },
 
-    onSubmit(values) {
-      console.log("需求类型", this.radio);
+    async onSubmit(values) {
+      values.type = this.radio;
       console.log("submit", values);
+      let res = await addSaleForm(values)
+      Toast.success(res.message)
+      this.$router.back();
     },
   },
 };

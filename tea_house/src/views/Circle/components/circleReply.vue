@@ -27,6 +27,7 @@
         </div>
       </span>
     </div>
+    <!-- {{ circle_id }} -->
     <van-popup position="bottom" v-model="show1">
       <van-field
         v-model="message"
@@ -46,7 +47,7 @@
 </template>
 
 <script>
-import { addCircleReplys } from "@/api/circle.js";
+import { addCircleReplys, getCircleDetail } from "@/api/circle.js";
 export default {
   name: "circleComponent",
   props: {
@@ -56,9 +57,9 @@ export default {
     comment_id: {
       type: Number,
     },
-    // circle_id: {
-    //   type: Number,
-    // },
+    circle_id: {
+      type: Number,
+    },
   },
   data() {
     return {
@@ -106,16 +107,39 @@ export default {
       this.$router.push({ name: urlName });
     },
     changeGood(item) {
-      item.isLike = !item.isLike;
-      if (item.isLike) {
-        item.likes++;
+      let token = localStorage.getItem("token");
+      if (!token) {
+        this.$router.push({ name: "login" });
       } else {
-        item.likes--;
+        item.isLike = !item.isLike;
+        if (item.isLike) {
+          item.likes++;
+        } else {
+          item.likes--;
+        }
+        let res = JSON.parse(localStorage.getItem(`circle_comment_${this.circle_id}`));
+        let result = res.find((comment) => item.comment_id === comment.id);
+        if (result) {
+          // 遍历评论的 child 数组，找到匹配的子评论并修改
+          result.child.forEach((child) => {
+            if (child.id === item.id) {
+              child.isLike = item.isLike;
+              child.likes = item.likes;
+            }
+          });
+
+          // 更新本地存储的数据
+          localStorage.setItem(`circle_comment_${this.circle_id}`, JSON.stringify(res));
+          // console.log(res, '....')
+        }
+        console.log(item, result, "///");
       }
-      // let res = localStorage.getItem(`circle_comment_${this.circle_id}`)
-      console.log(res, 370)
     },
     showPopup(comment) {
+      let token = localStorage.getItem("token");
+      if (!token) {
+        this.$router.push({ name: "login" });
+      }
       this.show1 = true;
       this.placeholder = `回复${comment.nickname}`;
       this.replayName = comment.nickname;
@@ -130,7 +154,7 @@ export default {
       let res = await getCircleDetail({ id: this.circle_id });
       localStorage.setItem(`circle_comment_${this.circle_id}`, JSON.stringify(res.data));
       this.show1 = false;
-      location.reload();
+      // location.reload();
     },
   },
   async mounted() {

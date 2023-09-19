@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2023-09-03 22:18:37
  * @LastEditors: tianxianning 1519309240@qq.com
- * @LastEditTime: 2023-09-18 08:53:19
+ * @LastEditTime: 2023-09-19 11:27:43
  * @FilePath: \shengchanshixi\tea_house\src\views\User\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,13 +19,13 @@
     <!-- 个人信息 -->
     <div class="information">
       <!-- 上 -->
-      <div class="info_top" @click="gotoPage()">
+      <div class="info_top" @click="gotoPage('userDetail')">
         <div class="img">
-          <img :src="userData.image" alt="" />
+          <img :src="userInfo.avatar" alt="" />
         </div>
 
         <div class="uid">
-          <p class="nick">{{ userData.nickname }}</p>
+          <p class="nick">{{ userInfo.nickname }}</p>
         </div>
 
         <div class="zhuye">
@@ -39,23 +39,23 @@
       <!-- 下 -->
       <div class="info_btm">
         <ul>
-          <li>
+          <li @click="gotoPage('userkong', '文章')">
             <a href="#">
-              <p>{{ userData.article }}</p>
+              <p>0</p>
               <!-- <p>0</p> -->
               <span>文章</span>
             </a>
           </li>
-          <li>
+          <li @click="gotoPage('userkong', '评测')">
             <a href="#">
-              <p>{{ userData.evaluate }}</p>
-              <!-- <p>0</p> -->
+              <p>0</p>
+
               <span>评测</span>
             </a>
           </li>
-          <li>
+          <li @click="gotoPage('userkong', '评论')">
             <a href="#">
-              <p>{{ userData.comment }}</p>
+              <p>0</p>
               <!-- <p>0</p> -->
               <span>评论</span>
             </a>
@@ -71,16 +71,35 @@
         title="我的茶友号"
         :icon="chayouhao"
         :value="userData.tea_friends"
+        @click="gotoPage('userkong', '我的茶友号')"
         is-link
       />
-      <van-cell title="文章" :icon="wenzhang" :value="userData.article" is-link />
-      <van-cell title="评测" :icon="pingce" :value="userData.evaluate" is-link />
-      <van-cell title="供求信息" :icon="gongqiu" :value="userData.supply" is-link />
+      <van-cell
+        @click="gotoPage('userkong', '文章')"
+        title="文章"
+        :icon="wenzhang"
+        :value="userData.article"
+        is-link
+      />
+      <van-cell
+        @click="gotoPage('userkong', '评测')"
+        title="评测"
+        :icon="pingce"
+        :value="userData.evaluate"
+        is-link
+      />
+      <van-cell
+        @click="gotoPage('userkong', '供求信息')"
+        title="供求信息"
+        :icon="gongqiu"
+        :value="userData.supply"
+        is-link
+      />
     </div>
 
     <div class="setList">
       <div class="signOut">
-        <van-button class="btn" round type="">退出登录</van-button>
+        <van-button class="btn" round type="" @click="loginOut">退出登录</van-button>
       </div>
     </div>
     <!-- 导航栏 -->
@@ -98,6 +117,7 @@ export default {
   components: { Tabbar },
   data() {
     return {
+      userInfo: {},
       jifen:
         "https://assets.puercn.com/v3assets/h5/icon27-e068eb3c96a74bdbebd00455d9e8a7b883fe1f86ca5420e4d3a93ae84146cade.png",
       pingce:
@@ -113,18 +133,25 @@ export default {
     };
   },
   methods: {
-    gotoPage() {
-      this.$router.push({ path: "/userDetail" });
+    loginOut() {
+      localStorage.removeItem("token");
+      location.reload();
+    },
+    gotoPage(urlName, item) {
+      console.log(item, "12312");
+      this.$router.push({ name: urlName, params: { data: item } });
     },
   },
   async mounted() {
-    let res = await test();
+    // let res = await test();
 
-    let arr = res.data[1];
+    // let arr = res.data[1];
 
-    this.userData = arr;
+    // this.userData = arr;
 
-    console.log(this.userData, "用户数据");
+    // console.log(this.userData, "用户数据");
+
+    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
   },
 };
 </script>

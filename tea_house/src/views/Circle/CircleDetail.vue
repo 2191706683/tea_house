@@ -83,11 +83,16 @@ export default {
   },
   methods: {
     onClickLeft() {
-      console.log("???");
-      history.back();
+      // console.log("???");
+      // history.back();
+      this.$router.back() 
     },
     showPopup() {
       this.show1 = true;
+      let token = localStorage.getItem("token");
+      if (!token) {
+        this.$router.push({ name: 'login' });
+      }
     },
     async submitComments() {
       console.log('test', this.state.id, this.message)

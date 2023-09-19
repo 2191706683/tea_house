@@ -28,7 +28,11 @@
           </div>
         </span>
       </div>
-      <CircleReply :circle_id="this.circle_id" :comment_id="item.id" :reply="item.child"/>
+      <CircleReply
+        :circle_id="item.circle_id"
+        :comment_id="item.id"
+        :reply="item.child"
+      />
     </div>
     <van-popup position="bottom" v-model="show1">
       <van-field
@@ -64,6 +68,7 @@ export default {
       comment_id: "",
       placeholder: "",
       replayName: "",
+      circle_idStore: "",
       // circleList: [
       //   {
       //     id: "1",
@@ -94,7 +99,7 @@ export default {
       //     isLike: false,
       //   },
       // ],
-        circleList: [],
+      circleList: [],
     };
   },
   methods: {
@@ -102,35 +107,53 @@ export default {
       this.$router.push({ name: urlName });
     },
     async changeGood(item) {
-      item.isLike = !item.isLike;
-      if (item.isLike) {
-        item.likes++;
+      let token = localStorage.getItem("token");
+      if (!token) {
+        this.$router.push({ name: "login" });
       } else {
-        item.likes--;
+        item.isLike = !item.isLike;
+        if (item.isLike) {
+          item.likes++;
+        } else {
+          item.likes--;
+        }
+        await this.$nextTick();
+        localStorage.setItem(
+          `circle_comment_${this.circle_id}`,
+          JSON.stringify(this.circleList)
+        );
       }
-      await this.$nextTick();
-      localStorage.setItem(`circle_comment_${this.circle_id}`, JSON.stringify(this.circleList))
     },
     showPopup(comment) {
+      let token = localStorage.getItem("token");
+      if (!token) {
+        this.$router.push({ name: "login" });
+      }
       this.show1 = true;
       this.comment_id = comment.id;
       this.placeholder = `回复${comment.nickname}`;
       this.replayName = comment.nickname;
     },
     async submitReply() {
-      console.log('test', this.comment_id, this.message)
-      await addCircleReplys({comment_id: this.comment_id, circle_content: this.message, replayName: this.replayName})
+      console.log("test", this.comment_id, this.message);
+      await addCircleReplys({
+        comment_id: this.comment_id,
+        circle_content: this.message,
+        replayName: this.replayName,
+      });
       this.show1 = false;
-      let res = await getCircleDetail({id:this.circle_id});
-      localStorage.setItem(`circle_comment_${this.circle_id}`, JSON.stringify(res.data))
+      let res = await getCircleDetail({ id: this.circle_id });
+      localStorage.setItem(`circle_comment_${this.circle_id}`, JSON.stringify(res.data));
       location.reload();
-    }
+    },
   },
   async mounted() {
     await this.$nextTick();
-    let res = await getCircleDetail({id:this.circle_id});
+    this.circle_idStore = this.circle_id;
+    let res = await getCircleDetail({ id: this.circle_id });
     console.log(res.data, 304);
-    this.circleList = JSON.parse(localStorage.getItem(`circle_comment_${this.circle_id}`)) || res.data;
+    this.circleList =
+      JSON.parse(localStorage.getItem(`circle_comment_${this.circle_id}`)) || res.data;
   },
 };
 </script>

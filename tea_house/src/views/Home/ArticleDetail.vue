@@ -18,7 +18,7 @@
     <div class="time">
       <span style="margin-left: 5px"> 2023-09-05 09:28 <br /> </span>
     </div>
-    <img class="img1" :src="state.article_img" />
+    <van-image class="img1" :src="state.article_img" />
     <div class="p1">
       <div v-html="article_content"></div>
     </div>
@@ -44,7 +44,8 @@ export default {
   },
   methods: {
     onClickLeft() {
-      history.back();
+      // history.back();
+      this.$router.back() 
     },
   },
   async mounted() {

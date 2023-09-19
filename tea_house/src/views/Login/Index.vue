@@ -14,7 +14,8 @@
     </van-notice-bar>
     <div class="login_icon">
       <img
-        src="https://p3.dcarimg.com/obj/eden-cn/vlseh7ubqnuhs/motor/favicon/favicon-96x96.png"
+        style="width: 100px; height: 100px"
+        src="https://m.puercn.com/xsystem/ckeditor_assets/pictures/412335/content_191.jpg"
         alt=""
       />
     </div>
@@ -42,12 +43,12 @@
         </van-cell-group>
         <div style="margin: 16px; margin-top: 20px">
           <div style="padding: 0 0 12px 16px" @click="toggle('register')">立即注册</div>
-          <van-button round block type="primary" color="#ffcc32" native-type="submit">
+          <van-button round block type="primary" color="#b83b17" native-type="submit">
             登录
           </van-button>
         </div>
         <div class="checkbox">
-          <van-checkbox v-model="checked" checked-color="#ffd452" />
+          <van-checkbox v-model="checked" checked-color="#b83b17" />
           <span class="deal"
             >已阅读并同意以下协议
             <a
@@ -95,15 +96,10 @@
             placeholder="密码"
             :rules="[{ required: true, message: '请填写密码' }]"
           />
-          <van-field name="switch" label="管理员">
-            <template #input>
-              <van-switch size="18px" active-color="#ffcc32" v-model="state.isGM" />
-            </template>
-          </van-field>
         </van-cell-group>
         <div style="margin: 16px; margin-top: 20px">
           <div style="padding: 0 0 12px 16px" @click="toggle('login')">登录</div>
-          <van-button round block type="primary" color="#ffcc32" native-type="submit">
+          <van-button round block type="primary" color="#b83b17" native-type="submit">
             立即注册
           </van-button>
         </div>
@@ -112,129 +108,146 @@
   </div>
 </template>
 
-<script setup>
-import { ref, reactive } from "vue";
-import { useRouter } from "vue-router";
-import { login, register } from "@/service/user.js";
+<script>
+// import { ref, reactive } from "vue";
+// import { useRouter } from "vue-router";
+import { login, register } from "@/api/user.js";
 // import md5 from "js-md5";
-import {
-  showSuccessToast,
-  showLoadingToast,
-  showFailToast,
-  closeToast,
-  showToast,
-} from "vant";
+import { Toast, closeToast } from 'vant';
+// import {
+//   showSuccessToast,
+//   showLoadingToast,
+//   showFailToast,
+//   closeToast,
+//   showToast,
+// } from "vant";
 
-const router = useRouter();
+export default {
+  name: "login",
+  data() {
+    return {
+      checked: false,
+      state: {
+        type: "login",
+        username1: "",
+        password1: "",
+        isGM: false,
+      },
+    };
+  },
+  methods: {
+    toggle(type) {
+      this.state.type = type;
+    },
+    backPage() {
+      // history.back();
+      this.$router.back() 
+    },
+    async onSubmit(values) {
+      if (this.state.type === "login") {
+        if (!this.checked) {
+          Toast("请勾选协议！");
+        } else {
+          // 把表单的用户名和密码传给登录接口，返回状态码和信息给data
+          const data = await login({
+            name: values.username,
+            password: values.password,
+          });
 
-const checked = ref(false);
+          // 定义弹出层显示的倒计时
+          let second = 1;
+          // 定义弹出层
+          const toast = Toast.loading({
+            duration: 0,
+            forbidClick: true,
+            message: "登录中...",
+          });
 
-const state = reactive({
-  type: "login",
-  username1: "",
-  password1: "",
-  isGM: false,
-});
-
-// 切换登录还是注册
-const toggle = (type) => {
-  state.type = type;
-};
-
-const backPage = () => {
-  history.back();
-};
-
-// 判断当前状态类型是否为loing，并判断是否勾选了同意，若无，则探出提示，若勾选了，则进行相关步骤
-const onSubmit = async (values) => {
-  if (state.type === "login") {
-    if (!checked.value) {
-      showToast("请勾选协议！");
-    } else {
-      // 把表单的用户名和密码传给登录接口，返回状态码和信息给data
-      const data = await login({
-        name: values.username,
-        password: values.password,
-      });
-
-      // 定义弹出层显示的倒计时
-      let second = 1;
-      // 定义弹出层
-      const toast = showLoadingToast({
-        duration: 0,
-        forbidClick: true,
-        message: "登录中...",
-      });
-
-      /* 进行一秒定时, 倒计时先逐渐减一,如果不为0,则弹出层消息不变
+          /* 进行一秒定时, 倒计时先逐渐减一,如果不为0,则弹出层消息不变
         若为0,则清除该定时,检查登录接口返回的状态码是否为200，若为200，则登录成功，
         设置isLogin为true,并把返回的token设置到本地存储中，
         弹出登录成功窗口，跳转到首页
         否则弹出登录接口返回的信息
         并弹出成功弹窗并关闭,最后进行页面刷新
       */
-      const timer = setInterval(() => {
-        second--;
-        if (second) {
-          toast.message = `登录中...`;
-        } else {
-          clearInterval(timer);
-          if (data.statusCode == 200) {
-            localStorage.setItem("isLogin", true);
-            localStorage.setItem("token", data.data);
-            localStorage.setItem("isGM", data.isGM);
-            showSuccessToast("登录成功");
-            window.location.href = "/";
-          } else {
-            showFailToast(`${data.message}`);
-          }
-          closeToast();
+          const timer = setInterval(() => {
+            second--;
+            if (second) {
+              toast.message = `登录中...`;
+            } else {
+              clearInterval(timer);
+              if (data.statusCode == 200) {
+                console.log(data.data.userInfo)
+                localStorage.setItem("isLogin", true);
+                localStorage.setItem("token", data.data.token);
+                localStorage.setItem("userInfo", JSON.stringify(data.data.userInfo));
+                // localStorage.setItem("isGM", data.isGM);
+                Toast.success("登录成功");
+                window.location.href = "/";
+              } else {
+                Toast.fail(`${data.message}`);
+              }
+              Toast.clear();
+            }
+          }, 1000);
         }
-      }, 1000);
-    }
-  } else {
-    /* 若当前状态为register,则向注册接口发送post请求，并传参，
+      } else {
+        /* 若当前状态为register,则向注册接口发送post请求，并传参，
       返回状态码和信息    
     */
-    const data = await register({
-      name: values.username1,
-      password: values.password1,
-      isGM: values.switch,
-    });
-    // 若状态码不为0，弹出接口返回的信息
-    if (data.statusCode !== 200) {
-      showFailToast(`${data.message}`);
-    } else {
-      // 若为200，弹出注册成功并跳转到登录页面
-      showSuccessToast("注册成功");
-      state.type = "login";
-    }
-  }
+        const data = await register({
+          name: values.username1,
+          password: values.password1,
+          isGM: values.switch,
+        });
+        // 若状态码不为0，弹出接口返回的信息
+        if (data.statusCode !== 200) {
+          Toast.fail(`${data.message}`);
+        } else {
+          // 若为200，弹出注册成功并跳转到登录页面
+          Toast.success("注册成功");
+          state.type = "login";
+        }
+      }
+    },
+  },
 };
 </script>
 
-<style lang="stylus" scoped>
-.notice_bar
-    height 50px
-    line-height 50px
-    font-weight bold
-.login_icon
-    width 100%
-    text-align center
-    padding 40px 0
-img
-    border-radius 50%
-.checkbox
-    display flex
-    width 100%
-    justify-content center
-    align-items start
-    margin 20px auto
-    .deal
-        margin-left 20px
-        width 300px
-        font-size 14px
-        line-height 18px
-    .deal > a
-       color #ffcc32
+<style scoped>
+.notice_bar {
+  height: 50px;
+  line-height: 50px;
+  font-weight: bold;
+}
+
+.login_icon {
+  width: 100%;
+  text-align: center;
+  padding: 40px 0;
+}
+
+img {
+  border-radius: 50%;
+}
+
+.checkbox {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: start;
+  margin: 20px auto;
+}
+
+.deal {
+  margin-left: 20px;
+  width: 300px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.deal > a {
+  color: #b83b17;
+}
 </style>
+:;

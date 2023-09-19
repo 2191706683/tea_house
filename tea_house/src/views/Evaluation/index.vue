@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2023-09-03 22:18:37
  * @LastEditors: tianxianning 1519309240@qq.com
- * @LastEditTime: 2023-09-18 09:44:46
+ * @LastEditTime: 2023-09-18 17:02:15
  * @FilePath: \shengchanshixi\tea_house\src\views\User\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -94,7 +94,7 @@
                           <span class="endtime">{{ item.end_time }}</span>
                         </div>
                         <div class="divider"></div>
-                        <div class="applyfree">
+                        <div class="applyfree" @click="gotoPage('evaluate', item)">
                           <a class="apply" href="#">免费申请</a>
                         </div>
                         <div class="divider"></div>
@@ -135,16 +135,20 @@ export default {
       userData: [],
     };
   },
+  methods: {
+    gotoPage(urlName, item) {
+      // console.log(item, '12312');
+      this.$router.push({ name: urlName, params: { data: item } });
+    },
+  },
   async mounted() {
     let res = await evaluate();
-
-    // console.log(res);
 
     let arr = res.data;
 
     this.userData = arr;
 
-    console.log(this.userData, "评测数据");
+    // console.log(this.userData, "评测数据");
   },
 };
 </script>

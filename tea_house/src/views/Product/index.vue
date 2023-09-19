@@ -1,6 +1,6 @@
 <template>
   <div class="product_container">
-    <van-search @click="gotoPage('search')" v-model="value" disabled placeholder="搜索产品" />
+    <van-search @click="gotoPage('search')" v-model="value" placeholder="搜索产品" />
     <ProductIcon />
     <TeaTag></TeaTag>
     <TeaIndex></TeaIndex>
@@ -28,7 +28,7 @@ export default {
     }
   },
   async mounted() {
-    let res = await getProductList()
+    // let res = await getProductList()
     // console.log(res.data, 'product')
   }
 };

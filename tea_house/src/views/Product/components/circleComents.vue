@@ -9,7 +9,7 @@
           <div>
             <span class="userName">{{ item.nickname }} </span>
           </div>
-          <div class="circle_title">{{ item.circle_content }}</div>
+          <div class="circle_title">{{ item.comment }}</div>
         </span>
       </div>
     </div>
@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import { getCircleDetail } from "@/api/circle.js";
+import { getProductDetail } from "@/api/product.js";
 export default {
   name: "circleComponent",
   components: {  },
-  props: ["circle_id"],
+  props: ["product_id"],
   data() {
     return {
       value: "",
@@ -31,37 +31,7 @@ export default {
       comment_id: "",
       placeholder: "",
       replayName: "",
-      circleList: [
-        {
-          id: "1",
-          circle_id: "1",
-          avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-          nickname: "人在草上",
-          circle_content:
-            "广东的茶友发顺丰顺丰顺丰复色光如果 不太友好，小黄驾到，怎无人诚邀！",
-          likes: 8,
-          isLike: false,
-        },
-        {
-          id: "2",
-          circle_id: "1",
-          avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-          nickname: "人在草上",
-          circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
-          likes: 8,
-          isLike: false,
-        },
-        {
-          id: "3",
-          circle_id: "1",
-          avatar: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-          nickname: "人在草上",
-          circle_content: "广东的茶友不太友好，小黄驾到，怎无人诚邀！",
-          likes: 8,
-          isLike: false,
-        },
-      ],
-        // circleList: [],
+      circleList: [],
     };
   },
   methods: {
@@ -70,6 +40,11 @@ export default {
     // },
   },
   async mounted() {
+    await this.$nextTick();
+    // console.log(this.product_id, '30809')
+    let res = await getProductDetail({ id: this.product_id });
+    console.log(res.data.comments, 'ioioji')
+    this.circleList = res.data.comments;
   },
 };
 </script>

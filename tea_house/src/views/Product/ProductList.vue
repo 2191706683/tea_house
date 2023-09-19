@@ -89,7 +89,7 @@ export default {
     },
   },
   async mounted() {
-    // console.log(this.$route.params.data, 30)
+    console.log(this.$route.params.data, 30)
     if (typeof this.$route.params.data !== "undefined") {
       localStorage.setItem("productlist", JSON.stringify(this.$route.params.data))
     }

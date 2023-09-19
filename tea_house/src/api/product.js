@@ -19,3 +19,7 @@ export const getProductTag = () => {
 export const getProductIndex = () => {
     return axios.get('/teaHouse/getProductIndex')
 }
+
+export const addSaleForm = (params) => {
+    return axios.post('/teaHouse/insertSaleForm', params)
+}

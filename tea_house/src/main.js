@@ -19,14 +19,18 @@ const router = new VueRouter({
   routes: routes
 })
 
+// 路由守卫，登录判断，以及主子页面之间的切换
 router.beforeEach((to, from, next) => {
-  // if (from.name === 'circle') {
-  //   location.reload();
-  //   console.log('/////')
-  // }
-  // console.log(from)
-  next()
-})
+  const { requiredLogin } = to.meta;
+  const token = localStorage.getItem("token");
+  // 判断是否已经登录并是否页面需要登录权限，如果是，跳转到登录页面，若否，则放行
+  if (!token && requiredLogin) {
+    router.push('/login')
+  } else {
+    next();
+  }
+});
+
 new Vue({
   render: h => h(App),
   router: router

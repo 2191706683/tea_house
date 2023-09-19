@@ -66,7 +66,8 @@ export default {
   },
   methods: {
     onClickLeft() {
-      history.back();
+      // history.back();
+      this.$router.back() 
     },
     goToPage(path) {
       this.$router.push({ name: path });

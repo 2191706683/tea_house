@@ -12,6 +12,7 @@
           class="teaArticle-img"
           width="100%"
           height="180"
+          lazy-load
           :src="item.article_img"
         />
       </div>

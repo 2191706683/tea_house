@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <van-nav-bar style="background-color: #b83b17">
+    <van-nav-bar fixed style="background-color: #b83b17">
       <template #title>
         <span class="r" style="font-size: 17px">
           <img
@@ -8,7 +8,7 @@
             class="app-logo"
             src="https://assets.puercn.com/v3assets/v2/logo-46139d255448a6e7eed8ab315285c0cf25a4d44ec23f2255197fc533d6b6b963.png"
           />
-          茶友网 | 荒野古树
+          茶友网
         </span>
       </template>
       <template #left>
@@ -25,8 +25,8 @@
     </van-nav-bar>
 
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item v-for="e in imgg">
-        <img style="width: 100%" v-lazy="e.srcc" />
+      <van-swipe-item v-for="e in swipeImg">
+        <img style="width: 100%" :src="e.image" />
       </van-swipe-item>
     </van-swipe>
 
@@ -34,9 +34,9 @@
       <p class="p1">1280&nbsp;<span style="font-size: 6px">元/片</span></p>
       <p style="font-size: 18px; margin-top: -20px">{{title}}</p>
     </div>
-    <van-tabs v-model="active" scrollspy sticky>
+    <van-tabs v-model="active" scrollspy>
       <van-tab title="参数">
-        <div class="vox1" v-for="h in tabss">
+        <div class="vox1">
           <div class="vox2">
             <div
               style="
@@ -58,8 +58,8 @@
                 font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
               "
             >
-              分类：{{ h.dif }}<br />
-              外观：{{ h.face }}
+              分类：{{ userData.classify }}<br />
+              外观：{{ userData.appearance }}
             </div>
           </div>
           <div
@@ -71,12 +71,12 @@
             "
           >
             年份: {{ tea_year }}<br />
-            净重: {{ h.heave }}<br />
-            规格: {{ h.standard }}<br />
-            原料: {{ h.mul }}<br />
-            标准: {{ h.st }}<br />
-            保质期:{{ h.time }} <br />
-            厂家: {{ h.boss }}<br />
+            净重: {{ userData.suttle }}<br />
+            规格: {{ userData.specification }}<br />
+            原料: {{ userData.raw_material }}<br />
+            标准: --<br />
+            保质期:{{ userData.shelf_life }} <br />
+            厂家: {{ userData.manufacturer }}<br />
           </div>
         </div>
         <div style="width: 100%; height: 70px"></div>
@@ -86,7 +86,7 @@
         <div style="width: 100%; height: 70px"></div>
       </van-tab> -->
       <van-tab title="简介">
-        <div class="vox4" v-for="y in v4">
+        <div class="vox4">
           <div
             style="
               width: 97%;
@@ -95,20 +95,14 @@
               font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             "
           >
-            干茶：{{ y.tea }}<br />
-            口感：{{ y.taste }}<br />
-            叶底：{{ y.bit }}<br />
-            品质特点：{{ y.s }}<br />
-            <br />
-            天弘普洱茶介绍：{{ y.intro }}
-            <br />
+            <div v-html="userData.introduction"></div>
           </div>
         </div>
         <div style="width: 100%; height: 70px"></div>
       </van-tab>
       <van-tab title="短评">
         <div class="vox5">
-          <CircleComponent />
+          <CircleComponent :product_id="state.id"/>
         </div>
         <div style="width: 100%; height: 70px"></div>
       </van-tab>
@@ -159,89 +153,29 @@ export default {
       brand: "",
       category: "",
       tea_year: "",
-      v4: [
-        {
-          tea: "条索肥壮显毫",
-          taste: "醇厚浓郁，回甘生津，喉韵绵延悠长",
-          bit: "肥厚黄绿，实为普洱生茶的经典之作。",
-          s: "刮风寨有“茶中皇后”的美誉，外形条索肥壮较长，新茶的饼面墨绿油润，显白毫。",
-          intro:
-            " 天弘茶业创立于2004年，是一家集生产，加工，销售于一体的高端普洱茶品牌商，公司坚守核心原产地，在勐海建有近百亩田园式茶工厂。创始人为中国普洱茶实践派代表人物李朝仲先生， 自品牌创立10多年一直礼根茶山，匠心制茶，对每款茶的品质有着痴迷的追求。",
-        },
-      ],
-      tabss: [
-        {
-          brand: "天宏",
-          art: "生茶",
-          dif: "普洱茶 >>生茶",
-          face: "饼茶",
-          year: "2014",
-          heave: "357g",
-          standard: "357g/饼,28饼/件",
-          mul: "刮风寨古树晒青毛茶",
-          st: "--",
-          time: "适宜长期储存",
-          boss: "阚海天红茶叶有限公司",
-        },
-      ],
-      imgg: [
-        {
-          srcc: "https://img01.yzcdn.cn/vant/cat.jpeg",
-        },
-        {
-          srcc: "https://img01.yzcdn.cn/vant/cat.jpeg",
-        },
-        {
-          srcc: "https://img01.yzcdn.cn/vant/cat.jpeg",
-        },
-      ],
-      index: [
-        {
-          title: "参数",
-        },
-        {
-          title: "报价",
-        },
-        {
-          title: "简介",
-        },
-        {
-          title: "短评",
-        },
-        {
-          title: "资讯",
-        },
-      ],
-      list: [
-        {
-          src:
-            "https://assets.puercn.com/xsystem/daily/stories/covers/000/073/424/medium/4.jpg?1599791639",
-          title: "1111",
-        },
-        {
-          src:
-            "https://assets.puercn.com/xsystem/daily/stories/covers/000/073/424/medium/4.jpg?1599791639",
-          title: "1111",
-        },
-        {
-          src:
-            "https://assets.puercn.com/xsystem/daily/stories/covers/000/073/424/medium/4.jpg?1599791639",
-          title: "1111",
-        },
-      ],
+      userData:[],
+      swipeImg: [],
+      state: {}
     };
   },
   methods: {
     gotoPage(urlName) {
-      this.$router.push({ name: urlName });
+      let token = localStorage.getItem("token");
+      if (token) {
+        this.$router.push({ name: urlName });
+      } else {
+        this.$router.push({ name: 'login' });
+      }
+      
     },
     onClickLeft() {
-      console.log("???");
-      history.back();
+      // console.log("???");
+      // history.back();
+      this.$router.back() 
     },
   },
   async mounted() {
-    console.log(this.$route.params.data)
+    // console.log(this.$route.params.data)
     if (typeof this.$route.params.data !== "undefined") {
       localStorage.setItem("productdetail", JSON.stringify(this.$route.params.data))
     }
@@ -252,6 +186,17 @@ export default {
     this.category = this.state.category;
     this.brand = this.state.brand;
     this.tea_year = this.state.tea_year;
+    this.swipeImg = res.data.swipeimg
+    // let ress = await evaluate();
+
+    // console.log(res);
+    this.userData = res.data
+
+    // let arr = ress.data;
+
+    // this.userData = arr;
+
+    console.log(this.userData, "评测数据");
   }
 };
 </script>

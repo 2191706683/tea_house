@@ -5,6 +5,7 @@ import axios from "axios";
 axios.defaults.baseURL = 'http://127.0.0.1:3000'
 // 请求头 带上 Content-Type
 axios.defaults.headers['Authorization'] = localStorage.getItem('token') || ''
+// console.log(localStorage.getItem('token'), '0900889')
 
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 

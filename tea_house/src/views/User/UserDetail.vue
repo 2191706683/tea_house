@@ -10,9 +10,10 @@
         height="1.5rem"
         src="https://img01.yzcdn.cn/vant/cat.jpeg"
       />
-      <h2>u537949</h2>
+      <h2>{{ userInfo.nickname}}</h2>
+      <div>{{userInfo.introduction}}</div>
       <van-row type="">
-        <van-icon name="calendar-o" /> 2023-09-03 加入<br />
+        {{userInfo.address}} <van-icon name="calendar-o" /> 2023-09-03 加入<br />
         0 关注 0 粉丝
       </van-row>
     </div>
@@ -38,9 +39,13 @@ export default {
   data() {
     return {
       active: 3,
+      userInfo: {}
     };
   },
   methods: {
+  },
+  mounted() {
+    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
   }
 };
 </script>

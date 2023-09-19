@@ -14,57 +14,41 @@ const routes = [
     {
         path: '/product',
         name: 'product',
-        meta: {
-            requiredLogin: true,
-        },
         component: () => import('@/views/Product')
     },
     {
         path: '/productList',
         name: 'productList',
-        meta: {
-            requiredLogin: true,
-        },
         component: () => import('@/views/Product/ProductList.vue')
     },
     {
         path: '/productDetail',
         name: 'productDetail',
-        meta: {
-            requiredLogin: true,
-        },
         component: () => import('@/views/Product/ProductDetail.vue')
     },
     {
         path: '/productForm',
         name: 'productForm',
-        meta: {
-            requiredLogin: true,
-        },
         component: () => import('@/views/Product/ProductForm.vue')
     },
     {
         path: '/circle',
         name: 'circle',
-        meta: {
-            requiredLogin: true,
-        },
         component: () => import('@/views/Circle')
     },
     {
         path: '/circleDetail',
         name: 'circleDetail',
-        meta: {
-            requiredLogin: true,
-        },
         component: () => import('@/views/Circle/CircleDetail.vue')
+    },
+    {
+        path: '/evaluate',
+        name: 'evaluate',
+        component: () => import('@/views/Evaluation/evalution_information.vue')
     },
     {
         path: '/evaluation',
         name: 'evaluation',
-        meta: {
-            requiredLogin: true,
-        },
         component: () => import('@/views/Evaluation')
     },
     {
@@ -74,6 +58,14 @@ const routes = [
             requiredLogin: true,
         },
         component: () => import('@/views/User/index.vue'),
+    },
+    {
+        path: '/userkong',
+        name: 'userkong',
+        meta: {
+            requiredLogin: true,
+        },
+        component: () => import('@/views/User/kong.vue'),
     },
     {
         path: '/userDetail',
@@ -89,9 +81,6 @@ const routes = [
     {
         path: '/brand',
         name: 'brand',
-        meta: {
-            requiredLogin: true,
-        },
         component: () => import('@/views/Brand')
     },
     {
@@ -99,11 +88,11 @@ const routes = [
         name: 'search',
         component: () => import('@/views/Search')
     },
-    // {
-    //     path: '/login',
-    //     name: 'login',
-    //     component: () => import('@/views/Login')
-    // },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/Login/Index.vue')
+    },
     {
         path: '/404',
         name: 'NotFound',
